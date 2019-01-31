@@ -324,7 +324,7 @@ var Dataset = (function() {
 
     function userSuggestionTemplate(context) {
       var template = templates.suggestion;
-      return $(template(context)).attr("id", _.guid());
+      return $(template(context)).attr({ id: _.guid(), role: 'option' });
     }
 
     function suggestionTemplate(context) {
