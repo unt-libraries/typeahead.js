@@ -1,15 +1,16 @@
 /*!
- * typeahead.js 1.2.0
- * https://github.com/twitter/typeahead.js
- * Copyright 2013-2017 Twitter, Inc. and other contributors; Licensed MIT
+ * typeahead.js 1.2.1
+ * https://github.com/corejavascript/typeahead.js
+ * Copyright 2013-2019 Twitter, Inc. and other contributors; Licensed MIT
  */
+
 
 (function(root, factory) {
     if (typeof define === "function" && define.amd) {
         define([ "jquery" ], function(a0) {
             return root["Bloodhound"] = factory(a0);
         });
-    } else if (typeof exports === "object") {
+    } else if (typeof module === "object" && module.exports) {
         module.exports = factory(require("jquery"));
     } else {
         root["Bloodhound"] = factory(root["jQuery"]);
@@ -158,7 +159,7 @@
             noop: function() {}
         };
     }();
-    var VERSION = "1.2.0";
+    var VERSION = "1.2.1";
     var tokenizers = function() {
         "use strict";
         return {
@@ -956,7 +957,7 @@
         define([ "jquery" ], function(a0) {
             return factory(a0);
         });
-    } else if (typeof exports === "object") {
+    } else if (typeof module === "object" && module.exports) {
         module.exports = factory(require("jquery"));
     } else {
         factory(root["jQuery"]);
@@ -1429,6 +1430,7 @@
             40: "down"
         };
         function Input(o, www) {
+            var id;
             o = o || {};
             if (!o.input) {
                 $.error("input is missing");
@@ -1436,14 +1438,14 @@
             www.mixin(this);
             this.$hint = $(o.hint);
             this.$input = $(o.input);
+            this.$menu = $(o.menu);
+            id = this.$input.attr("id") || _.guid();
+            this.$menu.attr("id", id + "_listbox");
             this.$input.attr({
-                "aria-activedescendant": "",
-                "aria-owns": this.$input.attr("id") + "_listbox",
+                "aria-owns": id + "_listbox",
                 role: "combobox",
-                "aria-readonly": "true",
                 "aria-autocomplete": "list"
             });
-            $(www.menu).attr("id", this.$input.attr("id") + "_listbox");
             this.query = this.$input.val();
             this.queryWhenFocused = this.hasFocus() ? this.query : null;
             this.$overflowHelper = buildOverflowHelper(this.$input);
@@ -2424,7 +2426,8 @@
                     });
                     input = new Input({
                         hint: $hint,
-                        input: $input
+                        input: $input,
+                        menu: $menu
                     }, www);
                     menu = new MenuConstructor({
                         node: $menu,
