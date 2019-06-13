@@ -333,6 +333,8 @@ var Typeahead = (function() {
 
     open: function open() {
       if (!this.isOpen() && !this.eventBus.before('open')) {
+        console.log(this);
+        this.input.$input.attr("aria-expanded", true);
         this.menu.open();
         this._updateHint();
         this.eventBus.trigger('open');
@@ -343,6 +345,8 @@ var Typeahead = (function() {
 
     close: function close() {
       if (this.isOpen() && !this.eventBus.before('close')) {
+        console.log('close');
+        this.input.$input.attr("aria-expanded", false);
         this.menu.close();
         this.input.clearHint();
         this.input.resetInputValue();
