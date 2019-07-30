@@ -279,7 +279,7 @@ module.exports = function(grunt) {
     var _ = grunt.util._,
       pkg = grunt.file.readJSON("package.json"),
       bower = grunt.file.readJSON("bower.json"),
-      jqueryPlugin = {};
+      jqueryPlugin = grunt.file.readJSON("typeahead.js.jquery.json");
 
     bower = JSON.stringify(
       _.extend(bower, {
